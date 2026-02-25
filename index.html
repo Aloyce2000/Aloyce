@@ -5,128 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0b0f1a;
-            color: white;
-        }
-
-        .topbar {
-            background: #e10600;
-            padding: 8px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        header {
-            background: #111827;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 40px;
-            color: #22c55e;
-        }
-
-        nav {
-            background: #1f2937;
-            text-align: center;
-            padding: 15px;
-        }
-
-        nav a {
-            color: white;
-            margin: 20px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            color: #22c55e;
-        }
-
-        .hero {
-            background: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2');
-            background-size: cover;
-            background-position: center;
-            padding: 100px 20px;
-            text-align: center;
-        }
-
-        .hero h2 {
-            font-size: 50px;
-        }
-
-        section {
-            padding: 40px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .card {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-
-        .scoreboard {
-            display: flex;
-            justify-content: space-between;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .live {
-            color: red;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #334155;
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background: #111827;
-        }
-
-        iframe {
-            border-radius: 10px;
-        }
-
-        footer {
-            background: #111827;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            color: #aaa;
-        }
+        body { margin:0; font-family:Arial,sans-serif; background:#0b0f1a; color:white;}
+        .topbar {background:#e10600;padding:8px;text-align:center;font-weight:bold;}
+        header {background:#111827;padding:20px;text-align:center;}
+        header h1 {margin:0;font-size:40px;color:#22c55e;}
+        nav {background:#1f2937;text-align:center;padding:15px;}
+        nav a {color:white;margin:20px;text-decoration:none;font-weight:bold;}
+        nav a:hover {color:#22c55e;}
+        .hero {background:url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2');background-size:cover;background-position:center;padding:100px 20px;text-align:center;}
+        .hero h2 {font-size:50px;}
+        section {padding:40px;max-width:1200px;margin:auto;}
+        .card {background:#1e293b;padding:20px;border-radius:10px;margin-bottom:25px;}
+        .scoreboard {display:flex;justify-content:space-between;font-size:22px;font-weight:bold;}
+        .live {color:red;}
+        table {width:100%;border-collapse:collapse;}
+        th,td {border:1px solid #334155;padding:12px;text-align:center;}
+        th {background:#111827;}
+        iframe {border-radius:10px;}
+        footer {background:#111827;text-align:center;padding:20px;margin-top:40px;color:#aaa;}
     </style>
 </head>
-
 <body>
 
 <div class="topbar">
-🔴 BREAKING: Live football updates powered by API‑Football
+🔴 Live football updates powered by API‑Football
 </div>
 
 <header>
     <h1>⚽ ALOYCE</h1>
-    <p>Real Live Scores & Fixtures</p>
+    <p>Real Live Scores, Fixtures & Standings</p>
 </header>
 
 <nav>
     <a href="#live">Live</a>
     <a href="#fixtures">Fixtures</a>
+    <a href="#standings">Standings</a>
     <a href="#highlights">Highlights</a>
     <a href="#news">News</a>
 </nav>
@@ -138,16 +51,17 @@
 
 <section id="live">
 <h2>🔴 Live Matches</h2>
-<div id="liveMatches" class="card">
-    Loading live matches...
-</div>
+<div id="liveMatches" class="card">Loading live matches...</div>
 </section>
 
 <section id="fixtures">
 <h2>📅 Upcoming Fixtures</h2>
-<div id="fixturesList" class="card">
-    Loading upcoming fixtures...
-</div>
+<div id="fixturesList" class="card">Loading upcoming fixtures...</div>
+</section>
+
+<section id="standings">
+<h2>🏆 League Standings</h2>
+<div id="leagueTables" class="card">Loading standings...</div>
 </section>
 
 <section id="highlights">
@@ -181,94 +95,107 @@ allowfullscreen></iframe>
 const API_KEY = "44fb67872de84de88453adad77acb9f1";
 
 // ----------------------
-// Fetch Live Matches (status=LIVE)
+// Leagues to show
+const leagues = [
+    {id:39, name:"Premier League"}, // PL
+    {id:140, name:"La Liga"},       // PD
+    {id:78, name:"Bundesliga"},     // BL1
+    {id:135, name:"Serie A"},       // SA
+    {id:61, name:"Ligue 1"}        // FL1
+];
+
+// ----------------------
+// Fetch live matches for all leagues
 async function fetchLiveMatches() {
-    try {
-        const res = await fetch("https://v3.football.api-sports.io/fixtures?live=all", {
-            method: "GET",
-            headers: {
-                "x-apisports-key": API_KEY
+    const container = document.getElementById("liveMatches");
+    container.innerHTML = "";
+    for(const league of leagues){
+        try{
+            const res = await fetch(`https://v3.football.api-sports.io/fixtures?league=${league.id}&live=all`, {
+                method:"GET",
+                headers: {"x-apisports-key": API_KEY}
+            });
+            const data = await res.json();
+            if(data.response.length === 0){
+                container.innerHTML += `<p>No live matches for ${league.name}</p>`;
+                continue;
             }
-        });
-        const data = await res.json();
-        const container = document.getElementById("liveMatches");
-        if(data.response.length === 0){
-            container.innerHTML = "<p>No live matches at the moment.</p>";
-            return;
-        }
-        container.innerHTML = "";
-        data.response.forEach(match => {
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-                <div class="scoreboard">
+            container.innerHTML += `<h3>${league.name}</h3>`;
+            data.response.forEach(match=>{
+                const card = document.createElement("div");
+                card.className="card";
+                card.innerHTML = `<div class="scoreboard">
                     <span>${match.teams.home.name}</span>
                     <span>${match.goals.home ?? 0} - ${match.goals.away ?? 0}</span>
                     <span>${match.teams.away.name}</span>
                 </div>
-                <p class="live">LIVE - ${match.fixture.status.elapsed ?? 0}'</p>
-            `;
-            container.appendChild(card);
-        });
-    } catch(err){
-        console.error(err);
-        document.getElementById("liveMatches").innerHTML = "<p>Error loading live matches.</p>";
+                <p class="live">LIVE - ${match.fixture.status.elapsed ?? 0}'</p>`;
+                container.appendChild(card);
+            });
+        }catch(err){
+            console.error(err);
+            container.innerHTML += `<p>Error loading ${league.name}</p>`;
+        }
     }
 }
 
 // ----------------------
-// Fetch Upcoming Fixtures (Next 5 matches)
+// Fetch upcoming fixtures for Premier League
 async function fetchUpcomingFixtures() {
-    try {
-        const res = await fetch("https://v3.football.api-sports.io/fixtures?league=39&season=2026&status=NS&next=5", {
-            method: "GET",
-            headers: {
-                "x-apisports-key": API_KEY
-            }
+    const container = document.getElementById("fixturesList");
+    try{
+        const res = await fetch(`https://v3.football.api-sports.io/fixtures?league=39&season=2026&status=NS&next=5`, {
+            method:"GET",
+            headers: {"x-apisports-key": API_KEY}
         });
         const data = await res.json();
-        const container = document.getElementById("fixturesList");
-        container.innerHTML = "";
-        if(data.response.length === 0){
-            container.innerHTML = "<p>No upcoming fixtures.</p>";
-            return;
-        }
+        if(data.response.length ===0){ container.innerHTML="<p>No upcoming fixtures.</p>"; return; }
         const table = document.createElement("table");
-        table.innerHTML = `
-            <tr>
-                <th>Match</th>
-                <th>Date & Time</th>
-                <th>Countdown</th>
-            </tr>
-        `;
-        data.response.forEach((match, index) => {
-            const row = document.createElement("tr");
-            const matchDate = new Date(match.fixture.date);
-            row.innerHTML = `
-                <td>${match.teams.home.name} vs ${match.teams.away.name}</td>
-                <td>${matchDate.toLocaleString()}</td>
-                <td id="fixtureCountdown${index}">Loading...</td>
-            `;
+        table.innerHTML = `<tr><th>Match</th><th>Date & Time</th><th>Countdown</th></tr>`;
+        data.response.forEach((match,index)=>{
+            const row=document.createElement("tr");
+            const matchDate=new Date(match.fixture.date);
+            row.innerHTML=`<td>${match.teams.home.name} vs ${match.teams.away.name}</td>
+            <td>${matchDate.toLocaleString()}</td>
+            <td id="fixtureCountdown${index}">Loading...</td>`;
             table.appendChild(row);
-
-            // Countdown timer
-            setInterval(() => {
-                const now = new Date().getTime();
-                const distance = matchDate - now;
-                if(distance < 0){
-                    document.getElementById(`fixtureCountdown${index}`).innerText = "LIVE or Finished";
-                    return;
-                }
-                const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
-                const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
-                const seconds = Math.floor((distance % (1000*60))/1000);
-                document.getElementById(`fixtureCountdown${index}`).innerText = `${hours}h ${minutes}m ${seconds}s`;
-            }, 1000);
+            setInterval(()=>{
+                const now=new Date().getTime();
+                const distance=matchDate-now;
+                if(distance<0){document.getElementById(`fixtureCountdown${index}`).innerText="LIVE or Finished"; return;}
+                const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+                const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+                const seconds=Math.floor((distance%(1000*60))/1000);
+                document.getElementById(`fixtureCountdown${index}`).innerText=`${hours}h ${minutes}m ${seconds}s`;
+            },1000);
         });
-        container.appendChild(table);
-    } catch(err){
-        console.error(err);
-        document.getElementById("fixturesList").innerHTML = "<p>Error loading fixtures.</p>";
+        container.innerHTML=""; container.appendChild(table);
+    }catch(err){console.error(err); container.innerHTML="<p>Error loading fixtures.</p>";}
+}
+
+// ----------------------
+// Fetch league standings
+async function fetchLeagueStandings() {
+    const container=document.getElementById("leagueTables");
+    container.innerHTML="";
+    for(const league of leagues){
+        try{
+            const res=await fetch(`https://v3.football.api-sports.io/standings?league=${league.id}&season=2026`,{
+                method:"GET",
+                headers:{"x-apisports-key":API_KEY}
+            });
+            const data=await res.json();
+            if(data.response.length===0){container.innerHTML+=`<p>No standings for ${league.name}</p>`; continue;}
+            container.innerHTML+=`<h3>${league.name}</h3>`;
+            const table=document.createElement("table");
+            table.innerHTML="<tr><th>Position</th><th>Team</th><th>Points</th><th>Wins</th><th>Draws</th><th>Losses</th></tr>";
+            data.response[0].league.standings[0].forEach(team=>{
+                const row=document.createElement("tr");
+                row.innerHTML=`<td>${team.rank}</td><td>${team.team.name}</td><td>${team.points}</td><td>${team.all.win}</td><td>${team.all.draw}</td><td>${team.all.lose}</td>`;
+                table.appendChild(row);
+            });
+            container.appendChild(table);
+        }catch(err){console.error(err); container.innerHTML+=`<p>Error loading ${league.name}</p>`;}
     }
 }
 
@@ -276,7 +203,8 @@ async function fetchUpcomingFixtures() {
 // Initialize
 fetchLiveMatches();
 fetchUpcomingFixtures();
-setInterval(fetchLiveMatches, 10000); // Refresh live matches every 10 seconds
+fetchLeagueStandings();
+setInterval(fetchLiveMatches,10000); // Refresh live matches
 </script>
 
 </body>
