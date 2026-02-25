@@ -4,7 +4,6 @@
     <title>Aloyce - Pro Football Hub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-/* same styling as before */
 body {margin:0;font-family:Arial,sans-serif;background:#0b0f1a;color:white;}
 header, nav, .topbar, footer {background:#111827;padding:15px;text-align:center;}
 nav a {color:white;margin:15px;text-decoration:none;font-weight:bold;}
@@ -12,8 +11,10 @@ nav a:hover {color:#22c55e;}
 .section-title {border-bottom:2px solid #22c55e;padding-bottom:6px;font-size:24px;}
 .card {background:#1e293b;padding:15px;border-radius:10px;margin-top:15px;}
 table {width:100%;border-collapse:collapse;}
-th,td {border:1px solid #334155;padding:10px;text-align:center;}
+th,td {border:1px solid #334155;padding:10px;text-align:center;vertical-align:middle;}
 th {background:#111827;}
+img {width:40px;height:40px;border-radius:50%;}
+.team-logo {width:30px;height:30px;}
 </style>
 </head>
 <body>
@@ -44,6 +45,7 @@ th {background:#111827;}
 <footer>© 2026 Aloyce Football Hub | All Rights Reserved</footer>
 
 <script>
+// ----------------------
 // API KEY
 const API_KEY = "44fb67872de84de88453adad77acb9f1";
 
@@ -54,19 +56,14 @@ const leagues = [
   {id:78,name:"Bundesliga"},
   {id:135,name:"Serie A"},
   {id:61,name:"Ligue 1"},
-  {id:80,name:"Tanzania Premier League"} // if supported
+  {id:80,name:"Tanzania Premier League"} 
 ];
 
-// Live matches (same as before)
-async function fetchLiveMatches(){ /* code from previous example */ }
+// ----------------------
+// Live matches, Fixtures, Standings same as before (reuse previous functions)
 
-// Upcoming Fixtures (same as before)
-async function fetchUpcomingFixtures(){ /* code */ }
-
-// League Standings (same as before)
-async function fetchLeagueStandings(){ /* code */ }
-
-// New: Fetch top players for each league
+// ----------------------
+// Fetch top players with photos and stats
 async function fetchTopPlayers(){
   const container = document.getElementById("playerStats");
   container.innerHTML = "";
@@ -81,13 +78,24 @@ async function fetchTopPlayers(){
         container.innerHTML += `<p>No player stats available for ${league.name}</p>`;
         continue;
       }
-      // Header
       container.innerHTML += `<h3>${league.name} Top Scorers</h3>`;
       const table=document.createElement("table");
-      table.innerHTML = `<tr><th>Player</th><th>Team</th><th>Goals</th></tr>`;
+      table.innerHTML = `<tr>
+        <th>Player</th><th>Team</th><th>Goals</th><th>Assists</th><th>Appearances</th><th>Yellow</th><th>Red</th>
+      </tr>`;
       data.response.forEach(stat=>{
         const row=document.createElement("tr");
-        row.innerHTML = `<td>${stat.player.name}</td><td>${stat.team.name}</td><td>${stat.statistics[0].goals.total}</td>`;
+        const playerImg = stat.player.photo ? `<img src="${stat.player.photo}" alt="player">` : "";
+        const teamLogo = stat.statistics[0].team.logo ? `<img src="${stat.statistics[0].team.logo}" class="team-logo">` : "";
+        row.innerHTML = `
+          <td>${playerImg} ${stat.player.name}</td>
+          <td>${teamLogo} ${stat.statistics[0].team.name}</td>
+          <td>${stat.statistics[0].goals.total ?? 0}</td>
+          <td>${stat.statistics[0].goals.assists ?? 0}</td>
+          <td>${stat.statistics[0].games.appearences ?? 0}</td>
+          <td>${stat.statistics[0].cards.yellow ?? 0}</td>
+          <td>${stat.statistics[0].cards.red ?? 0}</td>
+        `;
         table.appendChild(row);
       });
       container.appendChild(table);
@@ -98,6 +106,7 @@ async function fetchTopPlayers(){
   }
 }
 
+// ----------------------
 // Initialize all sections
 fetchLiveMatches();
 fetchUpcomingFixtures();
