@@ -1,112 +1,116 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Aloyce - Professional Football Hub</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aloyce - Professional Football Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #0b0f1a;
-    color: white;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0b0f1a;
+            color: white;
+        }
 
-.topbar {
-    background: #e10600;
-    padding: 8px;
-    text-align: center;
-    font-weight: bold;
-}
+        .topbar {
+            background: #e10600;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
 
-header {
-    background: #111827;
-    padding: 20px;
-    text-align: center;
-}
+        header {
+            background: #111827;
+            padding: 20px;
+            text-align: center;
+        }
 
-header h1 {
-    margin: 0;
-    font-size: 40px;
-    color: #22c55e;
-}
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+            color: #22c55e;
+        }
 
-nav {
-    background: #1f2937;
-    text-align: center;
-    padding: 15px;
-}
+        nav {
+            background: #1f2937;
+            text-align: center;
+            padding: 15px;
+        }
 
-nav a {
-    color: white;
-    margin: 20px;
-    text-decoration: none;
-    font-weight: bold;
-}
+        nav a {
+            color: white;
+            margin: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-nav a:hover {
-    color: #22c55e;
-}
+        nav a:hover {
+            color: #22c55e;
+        }
 
-.hero {
-    background: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2');
-    background-size: cover;
-    background-position: center;
-    padding: 100px 20px;
-    text-align: center;
-}
+        .hero {
+            background: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 20px;
+            text-align: center;
+        }
 
-.hero h2 {
-    font-size: 50px;
-}
+        .hero h2 {
+            font-size: 50px;
+        }
 
-section {
-    padding: 40px;
-    max-width: 1200px;
-    margin: auto;
-}
+        section {
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
 
-.card {
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-}
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
 
-.scoreboard {
-    display: flex;
-    justify-content: space-between;
-    font-size: 22px;
-    font-weight: bold;
-}
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            font-size: 22px;
+            font-weight: bold;
+        }
 
-.live {
-    color: red;
-}
+        .live {
+            color: red;
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-th, td {
-    border: 1px solid #334155;
-    padding: 12px;
-    text-align: center;
-}
+        th, td {
+            border: 1px solid #334155;
+            padding: 12px;
+            text-align: center;
+        }
 
-th {
-    background: #111827;
-}
+        th {
+            background: #111827;
+        }
 
-footer {
-    background: #111827;
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    color: #aaa;
-}
-</style>
+        iframe {
+            border-radius: 10px;
+        }
+
+        footer {
+            background: #111827;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #aaa;
+        }
+    </style>
 </head>
 
 <body>
@@ -116,32 +120,32 @@ footer {
 </div>
 
 <header>
-<h1>⚽ ALOYCE</h1>
-<p>The Ultimate Football Experience</p>
+    <h1>⚽ ALOYCE</h1>
+    <p>The Ultimate Football Experience</p>
 </header>
 
 <nav>
-<a href="#live">Live</a>
-<a href="#fixtures">Fixtures</a>
-<a href="#highlights">Highlights</a>
-<a href="#news">News</a>
+    <a href="#live">Live</a>
+    <a href="#fixtures">Fixtures</a>
+    <a href="#highlights">Highlights</a>
+    <a href="#news">News</a>
 </nav>
 
 <div class="hero">
-<h2>Matchday Central</h2>
-<p>Live scores, fixtures & breaking football news</p>
+    <h2>Matchday Central</h2>
+    <p>Live scores, fixtures & breaking football news</p>
 </div>
 
 <section id="live">
 <h2>🔴 Live Match</h2>
 
 <div class="card">
-<div class="scoreboard">
-<span>Manchester City</span>
-<span>2 - 1</span>
-<span>Arsenal</span>
-</div>
-<p class="live">LIVE - 78'</p>
+    <div class="scoreboard">
+        <span>Manchester City</span>
+        <span>2 - 1</span>
+        <span>Arsenal</span>
+    </div>
+    <p class="live">LIVE - 78'</p>
 </div>
 
 </section>
@@ -154,25 +158,31 @@ footer {
 <tr>
 <th>Match</th>
 <th>Date</th>
-<th>Time</th>
+<th>Countdown</th>
 </tr>
 
 <tr>
 <td>Real Madrid vs Barcelona</td>
 <td>March 3, 2026</td>
-<td>20:00</td>
+<td id="fixture1">Loading...</td>
 </tr>
 
 <tr>
 <td>Bayern Munich vs Dortmund</td>
 <td>March 5, 2026</td>
-<td>18:30</td>
+<td id="fixture2">Loading...</td>
 </tr>
 
 <tr>
 <td>PSG vs Marseille</td>
 <td>March 6, 2026</td>
-<td>21:00</td>
+<td id="fixture3">Loading...</td>
+</tr>
+
+<tr>
+<td>Manchester United vs Chelsea</td>
+<td>March 7, 2026</td>
+<td id="fixture4">Loading...</td>
 </tr>
 
 </table>
@@ -209,6 +219,66 @@ allowfullscreen></iframe>
 <footer>
 © 2026 Aloyce Football Hub | All Rights Reserved
 </footer>
+
+<!-- JavaScript for Live Score & Countdown -->
+<script>
+// --- Simulated Live Scores ---
+const liveMatch = {
+    home: "Manchester City",
+    away: "Arsenal",
+    homeScore: 2,
+    awayScore: 1,
+    minute: 78
+};
+
+function updateLiveScore() {
+    const scoreboard = document.querySelector(".scoreboard");
+    if (scoreboard) {
+        scoreboard.innerHTML = `<span>${liveMatch.home}</span>
+                                <span>${liveMatch.homeScore} - ${liveMatch.awayScore}</span>
+                                <span>${liveMatch.away}</span>`;
+        const liveStatus = document.querySelector(".live");
+        if (liveStatus) liveStatus.textContent = `LIVE - ${liveMatch.minute}'`;
+    }
+}
+
+// Update every 10 seconds (simulation)
+setInterval(() => {
+    liveMatch.minute++;
+    if(liveMatch.minute > 90) liveMatch.minute = 90;
+    updateLiveScore();
+}, 10000);
+
+updateLiveScore();
+
+// --- Countdown for Upcoming Matches ---
+function countdown(matchId, matchDate) {
+    const countdownEl = document.getElementById(matchId);
+    if (!countdownEl) return;
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const distance = matchDate - now;
+        if(distance < 0){
+            countdownEl.textContent = "LIVE or Finished";
+            return;
+        }
+        const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+        const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+        const seconds = Math.floor((distance % (1000*60))/1000);
+        countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+}
+
+// Apply countdown to each upcoming match
+countdown("fixture1", new Date("2026-03-03T20:00:00"));
+countdown("fixture2", new Date("2026-03-05T18:30:00"));
+countdown("fixture3", new Date("2026-03-06T21:00:00"));
+countdown("fixture4", new Date("2026-03-07T19:00:00"));
+</script>
 
 </body>
 </html>
