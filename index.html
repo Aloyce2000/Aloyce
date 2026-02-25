@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Aloyce - Professional Football Hub</title>
+    <title>Aloyce - Live Football Hub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
@@ -116,12 +116,12 @@
 <body>
 
 <div class="topbar">
-🔴 BREAKING: Transfer window heating up across Europe!
+🔴 BREAKING: Live football updates powered by API‑Football
 </div>
 
 <header>
     <h1>⚽ ALOYCE</h1>
-    <p>The Ultimate Football Experience</p>
+    <p>Real Live Scores & Fixtures</p>
 </header>
 
 <nav>
@@ -137,147 +137,146 @@
 </div>
 
 <section id="live">
-<h2>🔴 Live Match</h2>
-
-<div class="card">
-    <div class="scoreboard">
-        <span>Manchester City</span>
-        <span>2 - 1</span>
-        <span>Arsenal</span>
-    </div>
-    <p class="live">LIVE - 78'</p>
+<h2>🔴 Live Matches</h2>
+<div id="liveMatches" class="card">
+    Loading live matches...
 </div>
-
 </section>
 
 <section id="fixtures">
 <h2>📅 Upcoming Fixtures</h2>
-
-<div class="card">
-<table>
-<tr>
-<th>Match</th>
-<th>Date</th>
-<th>Countdown</th>
-</tr>
-
-<tr>
-<td>Real Madrid vs Barcelona</td>
-<td>March 3, 2026</td>
-<td id="fixture1">Loading...</td>
-</tr>
-
-<tr>
-<td>Bayern Munich vs Dortmund</td>
-<td>March 5, 2026</td>
-<td id="fixture2">Loading...</td>
-</tr>
-
-<tr>
-<td>PSG vs Marseille</td>
-<td>March 6, 2026</td>
-<td id="fixture3">Loading...</td>
-</tr>
-
-<tr>
-<td>Manchester United vs Chelsea</td>
-<td>March 7, 2026</td>
-<td id="fixture4">Loading...</td>
-</tr>
-
-</table>
+<div id="fixturesList" class="card">
+    Loading upcoming fixtures...
 </div>
-
 </section>
 
 <section id="highlights">
 <h2>🔥 Featured Highlight</h2>
-
 <div class="card">
 <iframe width="100%" height="400"
 src="https://www.youtube.com/embed/dQw4w9WgXcQ"
 allowfullscreen></iframe>
 </div>
-
 </section>
 
 <section id="news">
 <h2>📰 Football News</h2>
-
 <div class="card">
 <h3>Title Race Intensifies</h3>
 <p>Top European clubs battle for domestic dominance.</p>
 </div>
-
 <div class="card">
 <h3>Injury Updates</h3>
 <p>Several stars expected to return before international break.</p>
 </div>
-
 </section>
 
 <footer>
 © 2026 Aloyce Football Hub | All Rights Reserved
 </footer>
 
-<!-- JavaScript for Live Score & Countdown -->
 <script>
-// --- Simulated Live Scores ---
-const liveMatch = {
-    home: "Manchester City",
-    away: "Arsenal",
-    homeScore: 2,
-    awayScore: 1,
-    minute: 78
-};
+// ----------------------
+// YOUR API KEY
+const API_KEY = "44fb67872de84de88453adad77acb9f1";
 
-function updateLiveScore() {
-    const scoreboard = document.querySelector(".scoreboard");
-    if (scoreboard) {
-        scoreboard.innerHTML = `<span>${liveMatch.home}</span>
-                                <span>${liveMatch.homeScore} - ${liveMatch.awayScore}</span>
-                                <span>${liveMatch.away}</span>`;
-        const liveStatus = document.querySelector(".live");
-        if (liveStatus) liveStatus.textContent = `LIVE - ${liveMatch.minute}'`;
-    }
-}
-
-// Update every 10 seconds (simulation)
-setInterval(() => {
-    liveMatch.minute++;
-    if(liveMatch.minute > 90) liveMatch.minute = 90;
-    updateLiveScore();
-}, 10000);
-
-updateLiveScore();
-
-// --- Countdown for Upcoming Matches ---
-function countdown(matchId, matchDate) {
-    const countdownEl = document.getElementById(matchId);
-    if (!countdownEl) return;
-
-    function updateTimer() {
-        const now = new Date().getTime();
-        const distance = matchDate - now;
-        if(distance < 0){
-            countdownEl.textContent = "LIVE or Finished";
+// ----------------------
+// Fetch Live Matches (status=LIVE)
+async function fetchLiveMatches() {
+    try {
+        const res = await fetch("https://v3.football.api-sports.io/fixtures?live=all", {
+            method: "GET",
+            headers: {
+                "x-apisports-key": API_KEY
+            }
+        });
+        const data = await res.json();
+        const container = document.getElementById("liveMatches");
+        if(data.response.length === 0){
+            container.innerHTML = "<p>No live matches at the moment.</p>";
             return;
         }
-        const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
-        const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
-        const seconds = Math.floor((distance % (1000*60))/1000);
-        countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
+        container.innerHTML = "";
+        data.response.forEach(match => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <div class="scoreboard">
+                    <span>${match.teams.home.name}</span>
+                    <span>${match.goals.home ?? 0} - ${match.goals.away ?? 0}</span>
+                    <span>${match.teams.away.name}</span>
+                </div>
+                <p class="live">LIVE - ${match.fixture.status.elapsed ?? 0}'</p>
+            `;
+            container.appendChild(card);
+        });
+    } catch(err){
+        console.error(err);
+        document.getElementById("liveMatches").innerHTML = "<p>Error loading live matches.</p>";
     }
-
-    setInterval(updateTimer, 1000);
-    updateTimer();
 }
 
-// Apply countdown to each upcoming match
-countdown("fixture1", new Date("2026-03-03T20:00:00"));
-countdown("fixture2", new Date("2026-03-05T18:30:00"));
-countdown("fixture3", new Date("2026-03-06T21:00:00"));
-countdown("fixture4", new Date("2026-03-07T19:00:00"));
+// ----------------------
+// Fetch Upcoming Fixtures (Next 5 matches)
+async function fetchUpcomingFixtures() {
+    try {
+        const res = await fetch("https://v3.football.api-sports.io/fixtures?league=39&season=2026&status=NS&next=5", {
+            method: "GET",
+            headers: {
+                "x-apisports-key": API_KEY
+            }
+        });
+        const data = await res.json();
+        const container = document.getElementById("fixturesList");
+        container.innerHTML = "";
+        if(data.response.length === 0){
+            container.innerHTML = "<p>No upcoming fixtures.</p>";
+            return;
+        }
+        const table = document.createElement("table");
+        table.innerHTML = `
+            <tr>
+                <th>Match</th>
+                <th>Date & Time</th>
+                <th>Countdown</th>
+            </tr>
+        `;
+        data.response.forEach((match, index) => {
+            const row = document.createElement("tr");
+            const matchDate = new Date(match.fixture.date);
+            row.innerHTML = `
+                <td>${match.teams.home.name} vs ${match.teams.away.name}</td>
+                <td>${matchDate.toLocaleString()}</td>
+                <td id="fixtureCountdown${index}">Loading...</td>
+            `;
+            table.appendChild(row);
+
+            // Countdown timer
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = matchDate - now;
+                if(distance < 0){
+                    document.getElementById(`fixtureCountdown${index}`).innerText = "LIVE or Finished";
+                    return;
+                }
+                const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+                const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+                const seconds = Math.floor((distance % (1000*60))/1000);
+                document.getElementById(`fixtureCountdown${index}`).innerText = `${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        });
+        container.appendChild(table);
+    } catch(err){
+        console.error(err);
+        document.getElementById("fixturesList").innerHTML = "<p>Error loading fixtures.</p>";
+    }
+}
+
+// ----------------------
+// Initialize
+fetchLiveMatches();
+fetchUpcomingFixtures();
+setInterval(fetchLiveMatches, 10000); // Refresh live matches every 10 seconds
 </script>
 
 </body>
