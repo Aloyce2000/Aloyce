@@ -1,127 +1,177 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Aloyce - Football Hub</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #0f2027;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-            color: white;
-        }
+<title>Aloyce - Football Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        header {
-            background: #111;
-            padding: 25px;
-            text-align: center;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0f172a;
+    color: white;
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 40px;
-            color: #00ff88;
-        }
+header {
+    background: #111827;
+    padding: 20px;
+    text-align: center;
+}
 
-        nav {
-            background: #1a1a1a;
-            padding: 15px;
-            text-align: center;
-        }
+header h1 {
+    margin: 0;
+    color: #22c55e;
+}
 
-        nav a {
-            color: #00ff88;
-            margin: 20px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;
-        }
+nav {
+    background: #1f2937;
+    text-align: center;
+    padding: 15px;
+}
 
-        nav a:hover {
-            color: white;
-        }
+nav a {
+    color: #22c55e;
+    margin: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-        section {
-            padding: 40px;
-            max-width: 1000px;
-            margin: auto;
-        }
+nav a:hover {
+    color: white;
+}
 
-        .card {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
+section {
+    padding: 40px;
+    max-width: 1100px;
+    margin: auto;
+}
 
-        iframe {
-            border-radius: 10px;
-        }
+.card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
 
-        footer {
-            background: #111;
-            text-align: center;
-            padding: 15px;
-            margin-top: 40px;
-            color: #aaa;
-        }
+h2 {
+    border-bottom: 2px solid #22c55e;
+    padding-bottom: 10px;
+}
 
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #00ff88;
-            color: black;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 15px;
-            font-weight: bold;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-        .button:hover {
-            background: white;
-        }
-    </style>
+table, th, td {
+    border: 1px solid #334155;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #111827;
+}
+
+footer {
+    background: #111827;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <h1>⚽ ALOYCE</h1>
-    <p>Your Ultimate Football Experience</p>
+<h1>⚽ ALOYCE</h1>
+<p>Your Ultimate Football Experience</p>
 </header>
 
 <nav>
-    <a href="#">Home</a>
-    <a href="#">Live Matches</a>
-    <a href="#">Highlights</a>
-    <a href="#">Fixtures</a>
-    <a href="#">Contact</a>
+<a href="#live">Live Matches</a>
+<a href="#highlights">Highlights</a>
+<a href="#fixtures">Fixtures</a>
+<a href="#news">News</a>
 </nav>
 
-<section>
-    <h2>🔥 Latest Highlights</h2>
+<section id="live">
+<h2>🔴 Live Matches</h2>
 
-    <div class="card">
-        <h3>Match of the Week</h3>
-        <iframe width="100%" height="400"
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-        allowfullscreen>
-        </iframe>
-        <a class="button" href="#">Watch More</a>
-    </div>
+<div class="card">
+<h3>Live Now</h3>
+<p>Manchester United vs Chelsea</p>
+<p>Status: Live - 67'</p>
+</div>
 
-    <div class="card">
-        <h3>Upcoming Fixtures</h3>
-        <p>Manchester City vs Arsenal</p>
-        <p>Barcelona vs Real Madrid</p>
-        <p>Bayern Munich vs Dortmund</p>
-    </div>
+</section>
+
+<section id="highlights">
+<h2>🔥 Match Highlights</h2>
+
+<div class="card">
+<iframe width="100%" height="400"
+src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+allowfullscreen></iframe>
+</div>
+
+</section>
+
+<section id="fixtures">
+<h2>📅 Upcoming Fixtures</h2>
+
+<div class="card">
+<table>
+<tr>
+<th>Match</th>
+<th>Date</th>
+<th>Time</th>
+</tr>
+
+<tr>
+<td>Barcelona vs Real Madrid</td>
+<td>March 3, 2026</td>
+<td>20:00</td>
+</tr>
+
+<tr>
+<td>Arsenal vs Liverpool</td>
+<td>March 5, 2026</td>
+<td>18:30</td>
+</tr>
+
+<tr>
+<td>Bayern vs Dortmund</td>
+<td>March 6, 2026</td>
+<td>21:00</td>
+</tr>
+
+</table>
+</div>
+
+</section>
+
+<section id="news">
+<h2>📰 Football News</h2>
+
+<div class="card">
+<h3>Transfer Rumors</h3>
+<p>Top clubs are preparing big summer transfers.</p>
+</div>
+
+<div class="card">
+<h3>Injury Updates</h3>
+<p>Several key players are expected to return next week.</p>
+</div>
 
 </section>
 
 <footer>
-    © 2026 Aloyce Football Hub | All Rights Reserved
+© 2026 Aloyce Football Hub | All Rights Reserved
 </footer>
 
 </body>
